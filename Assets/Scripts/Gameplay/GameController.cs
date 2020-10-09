@@ -35,16 +35,5 @@ public class GameController : MonoBehaviour
     void Start()
     {
         SpawnPlayer();
-        StartCoroutine(GameLoop());
-    }
-
-    IEnumerator GameLoop()
-    {
-        while (true)
-        {
-            var enemy = enemies[Random.Range(0, enemies.Count)];
-            Instantiate(enemy, enemiesSpawn.GetRandomArea(), Quaternion.identity);
-            yield return new WaitForSeconds(1f);
-        }
     }
 }
