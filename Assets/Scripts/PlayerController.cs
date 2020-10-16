@@ -11,6 +11,9 @@ public class PlayerController : MonoBehaviour
     [Range(0, 100)] public int hp = 100;
     [Range(1, 5)] public float walkSpeed = 4;
     [Range(1, 5)] public float speed = 4;
+
+    [Header("Player Addos")]
+    public Weapon mainWeapon;
     
     [Header("Player Stacks")]
     public int coins;
@@ -18,10 +21,19 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        // solo nos moveremos si (canMove igual a true) y (hp mayor a 0).
         if (canMove && hp > 0)
         {
            Move(); 
+        }
+
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            mainWeapon.Shot();
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            mainWeapon.Reload();
         }
     }
 

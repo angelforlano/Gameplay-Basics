@@ -4,24 +4,37 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public int enemyDamage;
+    public int hp = 25;
+
+    void Die()
+    {
+        GameController.Instance.RemoveEnemy(this);
+
+        gameObject.SetActive(false);
+    }
+
+    public void GetDamage(int damage)
+    {
+        hp -= damage;
+
+        if (hp <= 0)
+        {
+            Die();
+        }
+    }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if(other.GetComponent<DamageEntity>() != null)
         {
-            var player = other.gameObject.GetComponent<PlayerController>();
-            
-            var result = player.GetDamage(enemyDamage);
+            var entity = other.GetComponent<DamageEntity>();
 
-            if (result)
+            if (entity.damageEnemies)
             {
-               Debug.Log("Player muerto");
+                GetDamage(entity.damage);
 
-               //... 
+                entity.DestroyEntity();
             }
-
-            //player.GetSlow();
         }
     }
 }

@@ -26,8 +26,11 @@ public class EnemiesSpawner : MonoBehaviour
     {
         for (int i = 0; i < count; i++)
         {
-            var enemy = enemies[Random.Range(0, enemies.Count)];
-            Instantiate(enemy, spawnArea.GetRandomArea(), Quaternion.identity);
+            var enemyToSpawn = enemies[Random.Range(0, enemies.Count)];
+            var enemyGameObject = Instantiate(enemyToSpawn, spawnArea.GetRandomArea(), Quaternion.identity);
+            var enemy = enemyGameObject.GetComponent<Enemy>();
+
+            GameController.Instance.AddEnemy(enemy);
             yield return new WaitForSeconds(1f);
         }
     }

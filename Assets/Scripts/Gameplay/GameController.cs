@@ -7,9 +7,9 @@ public class GameController : MonoBehaviour
     public GameObject playerPrefab;
     public Transform playerSpawnPoint;
 
-    public SpawnArea enemiesSpawn;
-    public List<GameObject> enemies = new List<GameObject>();
-    
+    public PlayerController playerInGame;
+    private List<Enemy> enemiesInGame = new List<Enemy>();
+
     #region Singleton
 
     public static GameController Instance;
@@ -29,11 +29,26 @@ public class GameController : MonoBehaviour
 
     void SpawnPlayer()
     {
-        Instantiate(playerPrefab, playerSpawnPoint.position, Quaternion.identity);
+        var playerGameObject = Instantiate(playerPrefab, playerSpawnPoint.position, Quaternion.identity);
+        playerInGame = playerGameObject.GetComponent<PlayerController>();
+        
+        HUDController.Instance.SetPlayer(playerInGame);
     }
 
     void Start()
     {
         SpawnPlayer();
+    }
+
+    public void AddEnemy(Enemy enemy)
+    {
+        enemiesInGame.Add(enemy);
+
+        Debug.Log("Enemies Count: " + enemiesInGame.Count);
+    }
+
+    public void RemoveEnemy(Enemy enemy)
+    {
+        enemiesInGame.Remove(enemy);
     }
 }
