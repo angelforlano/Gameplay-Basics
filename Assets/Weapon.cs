@@ -12,7 +12,7 @@ public class Weapon : MonoBehaviour
     public int currentMagazine;
     public int currentAmmo;
 
-    void Start()
+    void Awake()
     {
         currentMagazine = magazine;
         currentAmmo = ammo;
