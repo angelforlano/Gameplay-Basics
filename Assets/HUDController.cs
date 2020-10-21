@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class HUDController : MonoBehaviour
 {
     public Text ammoText;
-    
+    public Animator fadeAnimator;
     public static HUDController Instance;
 
     private PlayerController player;
@@ -23,6 +23,8 @@ public class HUDController : MonoBehaviour
     
     IEnumerator UpdateHUD()
     {
+        FadeIn();
+
         while (true)
         {
             Debug.Log("Update HUD");
@@ -44,5 +46,15 @@ public class HUDController : MonoBehaviour
         player = _player;
 
         StartCoroutine(UpdateHUD());
+    }
+
+    public void FadeIn()
+    {
+        fadeAnimator.SetTrigger("FadeIn");
+    }
+
+    public void FadeOut()
+    {
+        fadeAnimator.SetTrigger("FadeOut");
     }
 }

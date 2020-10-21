@@ -19,9 +19,16 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    IEnumerator LoadLevelRoutine()
+    {
+        HUDController.Instance.FadeOut();
+        yield return new WaitForSeconds(1);
+        SceneManager.LoadScene("LoadingScreen");
+    }
+
     public void LoadLevel(string levelName)
     {
         levelToLoad = levelName;
-        SceneManager.LoadScene("LoadingScreen");
+        StartCoroutine(LoadLevelRoutine());
     }
 }
