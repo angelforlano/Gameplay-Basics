@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
+    public string levelToLoad;
     public static LevelManager Instance;
     
     void Awake()
@@ -20,6 +21,7 @@ public class LevelManager : MonoBehaviour
 
     public void LoadLevel(string levelName)
     {
-        SceneManager.LoadScene(levelName);
+        levelToLoad = levelName;
+        SceneManager.LoadScene("LoadingScreen");
     }
 }
