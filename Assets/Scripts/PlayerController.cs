@@ -64,24 +64,22 @@ public class PlayerController : MonoBehaviour
 
     public void GetSlow()
     {
-        speed = walkSpeed / 2;
+        currentSpeed = walkSpeed / 2;
         Debug.Log("Player Getting Slow");
     }
 
     public void RecoverSpeed()
     {
-        speed = walkSpeed;
+        currentSpeed = walkSpeed;
         Debug.Log("Player Recover Speed");
     }
 
-    // (simple) > es vacia, no tiene parametros!
     public void AddCoin()
     {
         coins++;
         Debug.Log("Coins > " + coins);
     }
 
-    // Funcion para recivir dano!!!!
     public bool GetDamage(int damage)
     {
         hp -= damage;

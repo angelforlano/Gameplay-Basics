@@ -1250,8 +1250,9 @@ MonoBehaviour:
   canMove: 1
   hp: 100
   walkSpeed: 4
-  speed: 5
+  runningSpeed: 6
   mainWeapon: {fileID: 7608621134747026681}
+  controller: {fileID: 5866666020984524939}
   coins: 0
   keys: 0
 --- !u!1 &7290531515941702480
