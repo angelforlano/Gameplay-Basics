@@ -9,15 +9,18 @@ public class PlayerController : MonoBehaviour
 
     [Header("Player Settings")]
     [Range(0, 100)] public int hp = 100;
-    [Range(1, 5)] public float walkSpeed = 4;
-    [Range(1, 5)] public float speed = 4;
+    [Range(1, 4)] public float walkSpeed = 3;
+    [Range(4, 8)] public float runningSpeed = 6;
 
     [Header("Player Addos")]
     public Weapon mainWeapon;
+    public Animator controller;
     
     [Header("Player Stacks")]
     public int coins;
     public int keys;
+
+    float currentSpeed;
 
     void Update()
     {
@@ -35,6 +38,13 @@ public class PlayerController : MonoBehaviour
         {
             mainWeapon.Reload();
         }
+
+        UpdateAnimator();
+    }
+
+    void UpdateAnimator()
+    {
+        controller.SetFloat("Speed", currentSpeed);
     }
 
     void Move()
@@ -42,7 +52,14 @@ public class PlayerController : MonoBehaviour
         var hMove = Input.GetAxis("Horizontal");
         var vMove = Input.GetAxis("Vertical");
 
-        transform.Translate(new Vector3(hMove, 0, vMove) * Time.deltaTime * speed);
+        if(vMove > 0)
+        {
+            currentSpeed = walkSpeed;
+        } else {
+            currentSpeed = 0;
+        }
+
+        transform.Translate(new Vector3(hMove, 0, vMove) * Time.deltaTime * currentSpeed);
     }
 
     public void GetSlow()
