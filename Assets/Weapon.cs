@@ -44,7 +44,7 @@ public class Weapon : MonoBehaviour
         if (currentMagazine > 0)
         {
             currentMagazine--;
-            var bullet = Instantiate(bulletPrefab, shotPoint.position, Quaternion.identity); 
+            var bullet = Instantiate(bulletPrefab, shotPoint.position, shotPoint.rotation); 
             Debug.Log("Shot!");
         }
     }

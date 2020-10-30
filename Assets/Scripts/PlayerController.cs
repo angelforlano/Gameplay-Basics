@@ -34,6 +34,26 @@ public class PlayerController : MonoBehaviour
             mainWeapon.Shot();
         }
 
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            controller.SetTrigger("Jump");
+        }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            controller.SetTrigger("Punch");
+        }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            controller.SetTrigger("Combo1");
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            controller.SetTrigger("Combo2");
+        }
+
         if (Input.GetKeyDown(KeyCode.R))
         {
             mainWeapon.Reload();
