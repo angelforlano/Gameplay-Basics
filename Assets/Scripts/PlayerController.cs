@@ -51,15 +51,21 @@ public class PlayerController : MonoBehaviour
     {
         var hMove = Input.GetAxis("Horizontal");
         var vMove = Input.GetAxis("Vertical");
-
+        
+        controller.SetFloat("VMove", vMove);
+        
         if(vMove > 0)
         {
             currentSpeed = walkSpeed;
+        } else if (vMove < 0)
+        {
+            currentSpeed = 1;
         } else {
             currentSpeed = 0;
         }
 
-        transform.Translate(new Vector3(hMove, 0, vMove) * Time.deltaTime * currentSpeed);
+        transform.Rotate(0, hMove * 120 * Time.deltaTime, 0, Space.World);
+        transform.Translate(new Vector3(0, 0, vMove) * Time.deltaTime * currentSpeed);
     }
 
     public void GetSlow()
