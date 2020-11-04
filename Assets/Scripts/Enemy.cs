@@ -102,7 +102,7 @@ public class Enemy : MonoBehaviour
         {
             // Debug.Log(Vector3.Distance(transform.position, wayPoints[currentWayPointIndex].position));
 
-            if (Vector3.Distance(transform.position, wayPoints[currentWayPointIndex].position) < 0.1)
+            if (Vector3.Distance(transform.position, wayPoints[currentWayPointIndex].position) < 1)
             {
                 GoToLinealPoint();
             }
