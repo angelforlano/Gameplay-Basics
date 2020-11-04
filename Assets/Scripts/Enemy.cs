@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour
     public int hp = 25;
     public List<Transform> wayPoints = new List<Transform>();
 
-    Transform currentWaypoint;
+    int currentWayPointIndex;
     NavMeshAgent agent;
 
     void Start()
@@ -50,19 +50,35 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    void GoToRandomPoint()
+    {
+        currentWayPointIndex = Random.Range(0, wayPoints.Count);
+        agent.SetDestination(wayPoints[currentWayPointIndex].position);
+    }
+
+    void GoToLinealPoint()
+    {
+        currentWayPointIndex++;
+        
+        if (currentWayPointIndex >= wayPoints.Count)
+        {
+            currentWayPointIndex = 0;
+        }
+
+        agent.SetDestination(wayPoints[currentWayPointIndex].position);
+    }
+
     IEnumerator UpdateLoop()
     {
-        currentWaypoint = wayPoints[Random.Range(0, wayPoints.Count)];
-        agent.SetDestination(currentWaypoint.position);
+        GoToRandomPoint();
 
         while (true)
         {
-            Debug.Log(Vector3.Distance(transform.position, currentWaypoint.position));
-            
-            if (Vector3.Distance(transform.position, currentWaypoint.position) < 0.1)
+            Debug.Log(Vector3.Distance(transform.position, wayPoints[currentWayPointIndex].position));
+
+            if (Vector3.Distance(transform.position, wayPoints[currentWayPointIndex].position) < 0.1)
             {
-                currentWaypoint = wayPoints[Random.Range(0, wayPoints.Count)];
-                agent.SetDestination(currentWaypoint.position);
+                GoToLinealPoint();
             }
 
             yield return new WaitForSeconds(1f);
