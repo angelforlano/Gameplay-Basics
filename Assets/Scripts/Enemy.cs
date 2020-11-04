@@ -1,10 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
     public int hp = 25;
+    public List<Transform> wayPoints = new List<Transform>();
+
+    Transform currentWaypoint;
+    NavMeshAgent agent;
+
+    void Start()
+    {
+        agent = gameObject.GetComponent<NavMeshAgent>();
+
+        StartCoroutine(UpdateLoop());
+    }
 
     void Die()
     {
@@ -35,6 +47,25 @@ public class Enemy : MonoBehaviour
 
                 entity.DestroyEntity();
             }
+        }
+    }
+
+    IEnumerator UpdateLoop()
+    {
+        currentWaypoint = wayPoints[Random.Range(0, wayPoints.Count)];
+        agent.SetDestination(currentWaypoint.position);
+
+        while (true)
+        {
+            Debug.Log(Vector3.Distance(transform.position, currentWaypoint.position));
+            
+            if (Vector3.Distance(transform.position, currentWaypoint.position) < 0.1)
+            {
+                currentWaypoint = wayPoints[Random.Range(0, wayPoints.Count)];
+                agent.SetDestination(currentWaypoint.position);
+            }
+
+            yield return new WaitForSeconds(1f);
         }
     }
 }
