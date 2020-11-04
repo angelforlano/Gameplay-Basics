@@ -79,6 +79,21 @@ public class Enemy : MonoBehaviour
         agent.SetDestination(wayPoints[currentWayPointIndex].position);
     }
 
+    bool PlayerOnRange(float range)
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, range);
+
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            if (colliders[i].gameObject.CompareTag("Player"))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     IEnumerator UpdateLoop()
     {
         GoToRandomPoint();
@@ -87,23 +102,21 @@ public class Enemy : MonoBehaviour
         {
             // Debug.Log(Vector3.Distance(transform.position, wayPoints[currentWayPointIndex].position));
 
-            // Cambiar Point!
             if (Vector3.Distance(transform.position, wayPoints[currentWayPointIndex].position) < 0.1)
             {
                 GoToLinealPoint();
             }
 
-            Collider[] colliders = Physics.OverlapSphere(transform.position, warningRange);
-
-            for (int i = 0; i < colliders.Length; i++)
+            if(PlayerOnRange(warningRange))
             {
-                if (colliders[i].gameObject.CompareTag("Player"))
-                {
-                    Debug.Log("Player Found");
-                } else {
-                    Debug.Log("Player Not Found");
-                }
+                Debug.Log("Player On Warning Range");
             }
+
+            if(PlayerOnRange(attackRange))
+            {
+                Debug.Log("Player On Attack Range");
+            }
+            
             
             yield return new WaitForSeconds(1f);
         }
