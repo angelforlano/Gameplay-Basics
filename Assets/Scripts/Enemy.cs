@@ -6,10 +6,21 @@ using UnityEngine.AI;
 public class Enemy : MonoBehaviour
 {
     public int hp = 25;
+    [Range(2, 20)] public int warningRange = 8;
+    [Range(2, 20)] public int attackRange = 4;
     public List<Transform> wayPoints = new List<Transform>();
 
     int currentWayPointIndex;
     NavMeshAgent agent;
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, warningRange);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
+    }
 
     void Start()
     {
@@ -74,13 +85,26 @@ public class Enemy : MonoBehaviour
 
         while (true)
         {
-            Debug.Log(Vector3.Distance(transform.position, wayPoints[currentWayPointIndex].position));
+            // Debug.Log(Vector3.Distance(transform.position, wayPoints[currentWayPointIndex].position));
 
+            // Cambiar Point!
             if (Vector3.Distance(transform.position, wayPoints[currentWayPointIndex].position) < 0.1)
             {
                 GoToLinealPoint();
             }
 
+            Collider[] colliders = Physics.OverlapSphere(transform.position, warningRange);
+
+            for (int i = 0; i < colliders.Length; i++)
+            {
+                if (colliders[i].gameObject.CompareTag("Player"))
+                {
+                    Debug.Log("Player Found");
+                } else {
+                    Debug.Log("Player Not Found");
+                }
+            }
+            
             yield return new WaitForSeconds(1f);
         }
     }
