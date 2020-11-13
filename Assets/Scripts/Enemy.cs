@@ -106,14 +106,17 @@ public class Enemy : MonoBehaviour
             {
                 if (Vector3.Distance(transform.position, wayPoints[currentWayPointIndex].position) < 1)
                 {
-                   GoToLinealPoint(); 
+                    GoToLinealPoint(); 
+                } else {
+                    agent.SetDestination(wayPoints[currentWayPointIndex].position);
                 }
             }
 
             if(PlayerOnRange(warningRange))
             {
-                Debug.Log("Player On Warning Range");
                 agent.SetDestination(playerTarget.transform.position);
+            } else {
+                playerTarget = null;
             }
 
             if(PlayerOnRange(attackRange))
