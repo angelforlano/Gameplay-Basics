@@ -10,6 +10,8 @@ public class EnemiesSpawner : MonoBehaviour
     public bool onStart;
     public bool useRandom;
     public List<GameObject> enemies = new List<GameObject>();
+    public List<Transform> wayPoints = new List<Transform>();
+    
     private SpawnArea spawnArea;
 
     void Start()
@@ -29,7 +31,9 @@ public class EnemiesSpawner : MonoBehaviour
             var enemyToSpawn = enemies[Random.Range(0, enemies.Count)];
             var enemyGameObject = Instantiate(enemyToSpawn, spawnArea.GetRandomArea(), Quaternion.identity);
             var enemy = enemyGameObject.GetComponent<Enemy>();
-
+            
+            enemy.SetWayPoints(wayPoints);
+            
             GameController.Instance.AddEnemy(enemy);
             yield return new WaitForSeconds(1f);
         }

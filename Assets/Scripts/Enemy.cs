@@ -8,8 +8,8 @@ public class Enemy : MonoBehaviour
     public int hp = 25;
     [Range(2, 20)] public int warningRange = 8;
     [Range(2, 20)] public int attackRange = 4;
-    public List<Transform> wayPoints = new List<Transform>();
-
+    
+    List<Transform> wayPoints = new List<Transform>();
     int currentWayPointIndex;
     NavMeshAgent agent;
 
@@ -120,5 +120,10 @@ public class Enemy : MonoBehaviour
             
             yield return new WaitForSeconds(1f);
         }
+    }
+
+    public void SetWayPoints(List<Transform> _wayPoints)
+    {
+        wayPoints = _wayPoints;
     }
 }
