@@ -9,8 +9,9 @@ public class Enemy : MonoBehaviour
     [Range(2, 20)] public int warningRange = 8;
     [Range(2, 20)] public int attackRange = 4;
     
-    List<Transform> wayPoints = new List<Transform>();
+    PlayerController playerTarget;
     int currentWayPointIndex;
+    List<Transform> wayPoints = new List<Transform>();
     NavMeshAgent agent;
 
     void OnDrawGizmosSelected()
@@ -87,6 +88,7 @@ public class Enemy : MonoBehaviour
         {
             if (colliders[i].gameObject.CompareTag("Player"))
             {
+                playerTarget = colliders[i].gameObject.GetComponent<PlayerController>();
                 return true;
             }
         }
@@ -100,25 +102,26 @@ public class Enemy : MonoBehaviour
 
         while (true)
         {
-            // Debug.Log(Vector3.Distance(transform.position, wayPoints[currentWayPointIndex].position));
-
-            if (Vector3.Distance(transform.position, wayPoints[currentWayPointIndex].position) < 1)
+            if (playerTarget == null)
             {
-                GoToLinealPoint();
+                if (Vector3.Distance(transform.position, wayPoints[currentWayPointIndex].position) < 1)
+                {
+                   GoToLinealPoint(); 
+                }
             }
 
             if(PlayerOnRange(warningRange))
             {
                 Debug.Log("Player On Warning Range");
+                agent.SetDestination(playerTarget.transform.position);
             }
 
             if(PlayerOnRange(attackRange))
             {
                 Debug.Log("Player On Attack Range");
             }
-            
-            
-            yield return new WaitForSeconds(1f);
+ 
+            yield return new WaitForSeconds(0.1f);
         }
     }
 
