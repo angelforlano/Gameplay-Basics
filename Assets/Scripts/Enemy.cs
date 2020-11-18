@@ -14,6 +14,14 @@ public class Enemy : MonoBehaviour
     List<Transform> wayPoints = new List<Transform>();
     NavMeshAgent agent;
     Animator controller;
+
+    void Start()
+    {
+        controller = gameObject.GetComponentInChildren<Animator>();
+        agent = gameObject.GetComponent<NavMeshAgent>();
+
+        StartCoroutine(UpdateLoop());
+    }
     
     void OnDrawGizmosSelected()
     {
@@ -22,14 +30,6 @@ public class Enemy : MonoBehaviour
 
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
-    }
-
-    void Start()
-    {
-        controller = gameObject.GetComponent<Animator>();
-        agent = gameObject.GetComponent<NavMeshAgent>();
-
-        StartCoroutine(UpdateLoop());
     }
 
     void Die()
@@ -104,6 +104,8 @@ public class Enemy : MonoBehaviour
 
         while (true)
         {
+            controller.SetBool("IsWalking", true);
+            
             if (playerTarget == null)
             {
                 if (Vector3.Distance(transform.position, wayPoints[currentWayPointIndex].position) < 1)
