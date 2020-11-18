@@ -13,7 +13,8 @@ public class Enemy : MonoBehaviour
     int currentWayPointIndex;
     List<Transform> wayPoints = new List<Transform>();
     NavMeshAgent agent;
-
+    Animator controller;
+    
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
@@ -25,6 +26,7 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
+        controller = gameObject.GetComponent<Animator>();
         agent = gameObject.GetComponent<NavMeshAgent>();
 
         StartCoroutine(UpdateLoop());
