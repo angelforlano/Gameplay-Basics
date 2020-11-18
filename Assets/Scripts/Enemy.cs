@@ -105,7 +105,7 @@ public class Enemy : MonoBehaviour
         while (true)
         {
             controller.SetBool("IsWalking", true);
-            
+
             if (playerTarget == null)
             {
                 if (Vector3.Distance(transform.position, wayPoints[currentWayPointIndex].position) < 1)
@@ -125,7 +125,8 @@ public class Enemy : MonoBehaviour
 
             if(PlayerOnRange(attackRange))
             {
-                Debug.Log("Player On Attack Range");
+                controller.SetTrigger("Attack");
+                yield return new WaitForSeconds(3f);
             }
  
             yield return new WaitForSeconds(0.1f);
