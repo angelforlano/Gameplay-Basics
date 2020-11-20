@@ -122,6 +122,5 @@ public class PlayerController : MonoBehaviour
     void Die()
     {
         controller.SetTrigger("Die");
-        //Destroy(this);
     }
 }
