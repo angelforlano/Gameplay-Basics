@@ -114,7 +114,14 @@ public class PlayerController : MonoBehaviour
         {
             return false;
         } else {
-           return true; 
+            Die();
+            return true; 
         }
+    }
+
+    void Die()
+    {
+        controller.SetTrigger("Die");
+        //Destroy(this);
     }
 }

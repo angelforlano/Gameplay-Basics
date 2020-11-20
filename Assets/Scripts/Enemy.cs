@@ -90,8 +90,13 @@ public class Enemy : MonoBehaviour
         {
             if (colliders[i].gameObject.CompareTag("Player"))
             {
-                playerTarget = colliders[i].gameObject.GetComponent<PlayerController>();
-                return true;
+                var _player = colliders[i].gameObject.GetComponent<PlayerController>();
+                
+                if(_player.hp > 0)
+                {
+                    playerTarget = _player;
+                    return true;
+                }
             }
         }
 
@@ -126,6 +131,12 @@ public class Enemy : MonoBehaviour
             if(PlayerOnRange(attackRange))
             {
                 controller.SetTrigger("Attack");
+                
+                if (playerTarget.GetDamage(10))
+                {
+                    playerTarget = null;
+                }
+                
                 yield return new WaitForSeconds(3f);
             }
  
