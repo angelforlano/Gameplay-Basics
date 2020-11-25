@@ -65,4 +65,14 @@ public class HUDController : MonoBehaviour
         diePanel.SetActive(true);
         diePanelAnimator.SetTrigger("Open");
     }
+
+    public void PlayAgainBtn()
+    {
+        LevelManager.Instance.LoadLevel("Level_01");
+    }
+
+    public void GoMenuBtn()
+    {
+        LevelManager.Instance.LoadLevel("Menu");
+    }
 }
