@@ -7,6 +7,7 @@ public class HUDController : MonoBehaviour
 {
     public Text ammoText;
     public Animator fadeAnimator;
+    public GameObject diePanel;
     public static HUDController Instance;
 
     private PlayerController player;
@@ -56,5 +57,10 @@ public class HUDController : MonoBehaviour
     public void FadeOut()
     {
         fadeAnimator.SetTrigger("FadeOut");
+    }
+
+    public void SetDiePanel()
+    {
+        diePanel.SetActive(true);
     }
 }

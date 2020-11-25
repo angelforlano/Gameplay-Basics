@@ -122,5 +122,6 @@ public class PlayerController : MonoBehaviour
     void Die()
     {
         controller.SetTrigger("Die");
+        HUDController.Instance.SetDiePanel();
     }
 }
