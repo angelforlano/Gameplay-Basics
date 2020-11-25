@@ -7,6 +7,7 @@ public class HUDController : MonoBehaviour
 {
     public Text ammoText;
     public Animator fadeAnimator;
+    public Animator diePanelAnimator;
     public GameObject diePanel;
     public static HUDController Instance;
 
@@ -62,5 +63,6 @@ public class HUDController : MonoBehaviour
     public void SetDiePanel()
     {
         diePanel.SetActive(true);
+        diePanelAnimator.SetTrigger("Open");
     }
 }
