@@ -53,7 +53,8 @@ public class Enemy : MonoBehaviour
         {
             StartCoroutine(Die());
         } else {
-            controller.SetTrigger("GetHit");
+            var hitID = Random.Range(1, 4);
+            controller.SetTrigger("GetHit"+hitID);
         }
     }
 
