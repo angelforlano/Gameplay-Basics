@@ -123,5 +123,6 @@ public class PlayerController : MonoBehaviour
     {
         controller.SetTrigger("Die");
         HUDController.Instance.SetDiePanel();
+        GameController.Instance.camera.enabled = false;
     }
 }
