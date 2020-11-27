@@ -1,14 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class GameController : MonoBehaviour
 {
     public GameObject playerPrefab;
     public Transform playerSpawnPoint;
 
-    public PlayerController playerInGame;
-    private List<Enemy> enemiesInGame = new List<Enemy>();
+    public CinemachineFreeLook camera; 
+    
+    PlayerController playerInGame;
+    List<Enemy> enemiesInGame = new List<Enemy>();
 
     #region Singleton
 
@@ -32,6 +35,9 @@ public class GameController : MonoBehaviour
         var playerGameObject = Instantiate(playerPrefab, playerSpawnPoint.position, Quaternion.identity);
         playerInGame = playerGameObject.GetComponent<PlayerController>();
         
+        camera.Follow = playerInGame.transform;
+        camera.LookAt = playerInGame.transform;
+
         HUDController.Instance.SetPlayer(playerInGame);
     }
 

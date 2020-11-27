@@ -14,6 +14,7 @@ public class Enemy : MonoBehaviour
     List<Transform> wayPoints = new List<Transform>();
     NavMeshAgent agent;
     Animator controller;
+    bool died;
 
     void Start()
     {
@@ -32,20 +33,27 @@ public class Enemy : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, attackRange);
     }
 
-    void Die()
+    IEnumerator Die()
     {
+        died = true;
         GameController.Instance.RemoveEnemy(this);
-
+        
+        controller.SetTrigger("Die");
+        yield return new WaitForSeconds(5f);
         gameObject.SetActive(false);
     }
 
     public void GetDamage(int damage)
     {
+        if (died) return;
+
         hp -= damage;
 
         if (hp <= 0)
         {
-            Die();
+            StartCoroutine(Die());
+        } else {
+            controller.SetTrigger("GetHit");
         }
     }
 
@@ -107,7 +115,7 @@ public class Enemy : MonoBehaviour
     {
         GoToRandomPoint();
 
-        while (true)
+        while (hp > 0)
         {
             controller.SetBool("IsWalking", true);
 
@@ -130,7 +138,8 @@ public class Enemy : MonoBehaviour
 
             if(PlayerOnRange(attackRange))
             {
-                controller.SetTrigger("Attack");
+                var attackID = Random.Range(1, 4);
+                controller.SetTrigger("Attack"+attackID);
                 
                 if (playerTarget.GetDamage(10))
                 {
