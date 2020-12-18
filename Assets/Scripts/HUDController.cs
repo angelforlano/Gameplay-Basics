@@ -31,7 +31,6 @@ public class HUDController : MonoBehaviour
 
         while (true)
         {
-            Debug.Log("Update HUD");
             ammoText.text = player.mainWeapon.currentMagazine + "/" + player.mainWeapon.currentAmmo;
 
             if (player.mainWeapon.currentMagazine <= 3)

@@ -136,13 +136,13 @@ public class PlayerController : MonoBehaviour
 
         for (int i = 0; i < colliders.Length; i++)
         {
-            if (colliders[i].gameObject.CompareTag("Collectionable"))
+            if (colliders[i].gameObject.CompareTag("Interactable"))
             {
-                var _collectionable = colliders[i].gameObject.GetComponent<Collectionable>();
+                var _interactable = colliders[i].gameObject.GetComponent<InteractionBase>();
                 
-                if (Input.GetKeyDown(KeyCode.E))
+                if (Input.GetKeyDown(KeyCode.E) && _interactable != null)
                 {
-                    _collectionable.Collect(this);
+                    _interactable.Interact();
                 }
 
                 HUDController.Instance.SetInteractMsg(true);
