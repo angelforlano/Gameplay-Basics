@@ -9,6 +9,8 @@ public class HUDController : MonoBehaviour
     public Animator fadeAnimator;
     public Animator diePanelAnimator;
     public GameObject diePanel;
+    public GameObject interactMsg;
+
     public static HUDController Instance;
 
     private PlayerController player;
@@ -74,5 +76,10 @@ public class HUDController : MonoBehaviour
     public void GoMenuBtn()
     {
         LevelManager.Instance.LoadLevel("Menu");
+    }
+
+    public void SetInteractMsg(bool status)
+    {
+        interactMsg.SetActive(status);
     }
 }

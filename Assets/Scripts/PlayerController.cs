@@ -19,11 +19,14 @@ public class PlayerController : MonoBehaviour
     [Header("Player Stacks")]
     public int coins;
     public int keys;
+    public int bullets;
 
     float currentSpeed;
 
     void Update()
     {
+        GetCollectionable();
+
         if (canMove && hp > 0)
         {
            Move(); 
@@ -49,10 +52,11 @@ public class PlayerController : MonoBehaviour
             controller.SetTrigger("Combo1");
         }
 
+        /*
         if (Input.GetKeyDown(KeyCode.E))
         {
             controller.SetTrigger("Combo2");
-        }
+        }*/
 
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -124,5 +128,33 @@ public class PlayerController : MonoBehaviour
         controller.SetTrigger("Die");
         HUDController.Instance.SetDiePanel();
         GameController.Instance.camera.enabled = false;
+    }
+
+    void GetCollectionable()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 1);
+
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            if (colliders[i].gameObject.CompareTag("Collectionable"))
+            {
+                var _collectionable = colliders[i].gameObject.GetComponent<Collectionable>();
+                
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    _collectionable.Collect(this);
+                }
+
+                HUDController.Instance.SetInteractMsg(true);
+                return;
+            }
+        }
+
+        HUDController.Instance.SetInteractMsg(false);
+    }
+
+    public void AddBullets(int _bullets)
+    {
+        bullets += _bullets;
     }
 }
